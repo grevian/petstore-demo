@@ -1,0 +1,48 @@
+POST http://localhost:8080/v3/pet
+Content-Type: application/json
+
+{
+  "Name": "Kipling",
+  "Category": {
+    "Name": "Dog"
+  },
+  "Tags": [
+    {
+      "Name": "Australian Shepherd"
+    },
+    {
+      "Name": "Puppy"
+    },
+    {
+      "Name": "Red Merle"
+    }
+  ],
+  "Status": "Idiot",
+  "photoUrls": []
+}
+
+###
+POST http://localhost:8080/v3/pet
+Content-Type: application/json
+
+{
+  "Name": "Ada",
+  "Category": {
+    "Name": "Dog"
+  },
+  "Tags": [
+    {
+      "Name": "Potcake"
+    },
+    {
+      "Name": "Older Dog"
+    },
+    {
+      "Name": "Black & White"
+    }
+  ],
+  "Status": "Sleeping",
+  "photoUrls": []
+}
+
+###

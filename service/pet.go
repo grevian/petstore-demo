@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"net/http"
 	"os"
 
 	openapi "github.com/grevian/petstore-demo/api/go"
@@ -10,15 +11,19 @@ import (
 var _ openapi.PetApiServicer = (*petAPIService)(nil)
 
 type petAPIService struct {
+	storage *petstoreStorage
 }
 
-func NewPetAPIService() *petAPIService {
-	return &petAPIService{}
+func NewPetAPIService(storage *petstoreStorage) *petAPIService {
+	return &petAPIService{
+		storage: storage,
+	}
 }
 
 func (p petAPIService) AddPet(ctx context.Context, pet openapi.Pet) (openapi.ImplResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	petId := p.storage.StorePet(&pet)
+	pet.Id = petId
+	return openapi.Response(http.StatusOK, pet), nil
 }
 
 func (p petAPIService) DeletePet(ctx context.Context, petId int64, apiKey string) (openapi.ImplResponse, error) {
@@ -37,8 +42,12 @@ func (p petAPIService) FindPetsByTags(ctx context.Context, tags []string) (opena
 }
 
 func (p petAPIService) GetPetById(ctx context.Context, petId int64) (openapi.ImplResponse, error) {
-	//TODO implement me
-	panic("implement me")
+	pet, err := p.storage.LoadPet(petId)
+	if err != nil {
+		return openapi.Response(http.StatusNotFound, nil), err
+	}
+
+	return openapi.Response(http.StatusOK, pet), nil
 }
 
 func (p petAPIService) UpdatePet(ctx context.Context, pet openapi.Pet) (openapi.ImplResponse, error) {
