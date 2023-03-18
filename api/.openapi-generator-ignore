@@ -21,3 +21,6 @@
 #docs/*.md
 # Then explicitly reverse the ignore rule for a single file:
 #!docs/README.md
+
+# See https://github.com/OpenAPITools/openapi-generator/issues/13206 for an explanation of this bug
+api/api_pet.go

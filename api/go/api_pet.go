@@ -13,6 +13,7 @@ package openapi
 import (
 	"encoding/json"
 	"net/http"
+	"os"
 	"strings"
 
 	"github.com/go-chi/chi/v5"
@@ -251,7 +252,7 @@ func (c *PetApiController) UploadFile(w http.ResponseWriter, r *http.Request) {
 	}
 
 	additionalMetadataParam := query.Get("additionalMetadata")
-	bodyParam := *os.File{}
+	bodyParam := &os.File{}
 	d := json.NewDecoder(r.Body)
 	d.DisallowUnknownFields()
 	if err := d.Decode(&bodyParam); err != nil {
