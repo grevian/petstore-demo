@@ -25,7 +25,7 @@ func main() {
 	}()
 
 	// Construct an API implementation using the default generated implementation
-	PetApiService := service.NewPetAPIService()
+	PetApiService := service.NewPetAPIService(service.NewPetstoreStorage())
 	PetApiController := openapi.NewPetApiController(PetApiService)
 
 	StoreApiService := service.NewStoreApiService()
