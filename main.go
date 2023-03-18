@@ -9,6 +9,7 @@ import (
 	"time"
 
 	openapi "github.com/grevian/petstore-demo/api/go"
+	"github.com/grevian/petstore-demo/service"
 )
 
 func main() {
@@ -24,13 +25,13 @@ func main() {
 	}()
 
 	// Construct an API implementation using the default generated implementation
-	PetApiService := openapi.NewPetApiService()
+	PetApiService := service.NewPetAPIService()
 	PetApiController := openapi.NewPetApiController(PetApiService)
 
-	StoreApiService := openapi.NewStoreApiService()
+	StoreApiService := service.NewStoreApiService()
 	StoreApiController := openapi.NewStoreApiController(StoreApiService)
 
-	UserApiService := openapi.NewUserApiService()
+	UserApiService := service.NewUserApiService()
 	UserApiController := openapi.NewUserApiController(UserApiService)
 
 	router := openapi.NewRouter(PetApiController, StoreApiController, UserApiController)
