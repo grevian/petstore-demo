@@ -10,6 +10,8 @@ RUN go build -o /service-bin
 
 FROM alpine
 
+EXPOSE 8080
+
 WORKDIR /app
 COPY --from=build /service-bin .
 
