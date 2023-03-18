@@ -83,6 +83,12 @@ func (c *PetApiController) Routes() Routes {
 			c.GetPetById,
 		},
 		{
+			"GetPetStatusById",
+			strings.ToUpper("Get"),
+			"/v3/pet/{petId}/status",
+			c.GetPetStatusById,
+		},
+		{
 			"UpdatePet",
 			strings.ToUpper("Put"),
 			"/v3/pet",
@@ -186,6 +192,25 @@ func (c *PetApiController) GetPetById(w http.ResponseWriter, r *http.Request) {
 	}
 
 	result, err := c.service.GetPetById(r.Context(), petIdParam)
+	// If an error occurred, encode the error with the status code
+	if err != nil {
+		c.errorHandler(w, r, err, &result)
+		return
+	}
+	// If no error, encode the body and the result code
+	EncodeJSONResponse(result.Body, &result.Code, result.Headers, w)
+
+}
+
+// GetPetStatusById - Your GET endpoint
+func (c *PetApiController) GetPetStatusById(w http.ResponseWriter, r *http.Request) {
+	petIdParam, err := parseInt64Parameter(chi.URLParam(r, "petId"), true)
+	if err != nil {
+		c.errorHandler(w, r, &ParsingError{Err: err}, nil)
+		return
+	}
+
+	result, err := c.service.GetPetStatusById(r.Context(), petIdParam)
 	// If an error occurred, encode the error with the status code
 	if err != nil {
 		c.errorHandler(w, r, err, &result)

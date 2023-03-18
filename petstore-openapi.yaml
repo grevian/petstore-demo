@@ -279,6 +279,42 @@ paths:
         - petstore_auth:
             - 'write:pets'
             - 'read:pets'
+  '/pet/{petId}/status':
+    parameters:
+      - name: petId
+        in: path
+        description: ID of pet to return
+        required: true
+        schema:
+          type: integer
+          format: int64
+    get:
+      summary: Your GET endpoint
+      tags:
+        - pet
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                example: sleeping
+                properties:
+                  status:
+                    type: string
+                    x-stoplight:
+                      id: yic9zn6ngfxpu
+                required:
+                  - status
+        '404':
+          description: Not Found
+      operationId: getPetStatusById
+      description: Returns the status of a single pet
+      security:
+        - api_key: []
+        - petstore_auth:
+            - 'read:pets'            
   '/pet/{petId}/uploadImage':
     post:
       tags:
